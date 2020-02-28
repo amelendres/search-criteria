@@ -1,0 +1,42 @@
+doctrine:
+    dbal:
+        url: '%env(resolve:DATABASE_URL)%'
+
+        # IMPORTANT: You MUST configure your server version,
+        # either here or in the DATABASE_URL env var (see .env file)
+        #server_version: '5.7'
+    orm:
+        auto_generate_proxy_classes: true
+        naming_strategy: doctrine.orm.naming_strategy.underscore_number_aware
+        auto_mapping: true
+        mappings:
+#            App:
+#                is_bundle: false
+#                type: annotation
+#                dir: '%kernel.project_dir%/src/Entity'
+#                prefix: 'App\Entity'
+#                alias: App
+
+            common:
+                type: xml
+                dir: "%kernel.project_dir%/src/Appto/Common/Infrastructure/Persistence/Doctrine/Mapping"
+                prefix: Appto\Common\Domain
+                is_bundle: false
+
+            boat:
+                type: xml
+                dir: '%kernel.project_dir%/src/Appto/Booking/Infrastructure/Persistence/Doctrine/Entity/Boat'
+                prefix: Appto\Booking\Domain\Boat
+                is_bundle: false
+
+            availability:
+                type: xml
+                dir: '%kernel.project_dir%/src/Appto/Booking/Infrastructure/Persistence/Doctrine/Entity/Availability'
+                prefix: Appto\Booking\Domain\Availability
+                is_bundle: false
+
+            request:
+                type: xml
+                dir: '%kernel.project_dir%/src/Appto/Booking/Infrastructure/Persistence/Doctrine/Entity/Request'
+                prefix: Appto\Booking\Domain\Request
+                is_bundle: false

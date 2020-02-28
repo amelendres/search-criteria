@@ -1,0 +1,16 @@
+boat:
+    2e01b4ab-26e3-446c-b1b9-79f6a7cc0e99:
+        ownerId: '6236e5fb-3fef-4651-950d-d4b7ff9d8df7'
+        numberOfPassengers: 3
+        length: 3
+        bookingCommissionPercent: 30
+    88396375-be08-48da-9f9a-fed37dd4631f:
+        ownerId: '6236e5fb-3fef-4651-950d-d4b7ff9d8df7'
+        numberOfPassengers: 7
+        length: 7
+        bookingCommissionPercent: 30
+    a0f8bd14-9cd5-4137-b153-ea7241cd4ee9:
+        ownerId: '6236e5fb-3fef-4651-950d-d4b7ff9d8df7'
+        numberOfPassengers: 10
+        length: 10
+        bookingCommissionPercent: 30

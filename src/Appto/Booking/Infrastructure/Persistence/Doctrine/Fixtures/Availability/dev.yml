@@ -1,0 +1,19 @@
+availability:
+    4efc797f-040a-47ee-b2fc-5aa13acd26d2:
+        boatId: '2e01b4ab-26e3-446c-b1b9-79f6a7cc0e99'
+        portId: '4944a50d-75bf-402b-b5c8-233d09e35e59'
+        timePeriod:
+            startDate: '2021/01/01'
+            endDate: '2021/04/01'
+        dailyPrice:
+            amount: 100
+            currency: 'EUR'
+    44130b57-1674-4531-8a02-af4ae3fe6a47:
+        boatId: '2e01b4ab-26e3-446c-b1b9-79f6a7cc0e99'
+        portId: '4944a50d-75bf-402b-b5c8-233d09e35e59'
+        timePeriod:
+            startDate: '2021/04/02'
+            endDate: '2021/06/01'
+        dailyPrice:
+            amount: 70
+            currency: 'EUR'

@@ -1,0 +1,15 @@
+{
+  "id": "{{$guid}}",
+  "boatId": "2e01b4ab-26e3-446c-b1b9-79f6a7cc0e99",
+  "portId": "4944a50d-75bf-402b-b5c8-233d09e35e59",
+  "numberOfPassengers": 3,
+  "startDate": "01-01-2021",
+  "endDate": "05-01-2021",
+  "requester": {
+    "name": "me",
+    "email": "me@mail.com",
+    "phoneNumber": "7777777"
+  },
+  "comment": "TEST AVAILABLE BOOKING REQUEST"
+}
+

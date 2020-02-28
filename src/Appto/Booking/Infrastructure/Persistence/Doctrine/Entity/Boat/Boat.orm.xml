@@ -1,0 +1,13 @@
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+                          https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+
+    <entity name="Appto\Booking\Domain\Boat\Boat" table="boo_boat" >
+        <embedded name="id" class="Appto\Booking\Domain\Boat\BoatId" use-column-prefix="false"/>
+        <embedded name="ownerId" class="Appto\Booking\Domain\Boat\OwnerId" use-column-prefix="false"/>
+        <embedded name="numberOfPassengers" class="Appto\Common\Domain\Number\NaturalNumber"/>
+        <field name="length" type="float" />
+        <field name="bookingCommissionPercent" type="float" />
+    </entity>
+</doctrine-mapping>

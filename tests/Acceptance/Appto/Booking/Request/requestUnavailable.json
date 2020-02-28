@@ -1,0 +1,15 @@
+{
+  "id": "{{$guid}}",
+  "boatId": "{{$guid}}",
+  "portId": "{{$guid}}",
+  "numberOfPassengers": 3,
+  "startDate": "01-01-2021",
+  "endDate": "05-01-2021",
+  "requester": {
+    "name": "me",
+    "email": "me@mail.com",
+    "phoneNumber": "7777777"
+  },
+  "comment": "test unavailable booking request"
+}
+
