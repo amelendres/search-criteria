@@ -4,8 +4,4 @@ services:
         autowire: true      # Automatically injects dependencies in your services.
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
 
-    Appto\Booking\Infrastructure\Persistence\Doctrine\Fixtures\:
-        public: true
-        resource: '%kernel.project_dir%/src/Appto/Booking/Infrastructure/Persistence/Doctrine/Fixtures/*/*Loader.php'
-        tags: [doctrine.fixture.orm]
 

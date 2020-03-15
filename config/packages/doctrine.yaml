@@ -17,26 +17,4 @@ doctrine:
 #                prefix: 'App\Entity'
 #                alias: App
 
-            common:
-                type: xml
-                dir: "%kernel.project_dir%/src/Appto/Common/Infrastructure/Persistence/Doctrine/Mapping"
-                prefix: Appto\Common\Domain
-                is_bundle: false
 
-            boat:
-                type: xml
-                dir: '%kernel.project_dir%/src/Appto/Booking/Infrastructure/Persistence/Doctrine/Entity/Boat'
-                prefix: Appto\Booking\Domain\Boat
-                is_bundle: false
-
-            availability:
-                type: xml
-                dir: '%kernel.project_dir%/src/Appto/Booking/Infrastructure/Persistence/Doctrine/Entity/Availability'
-                prefix: Appto\Booking\Domain\Availability
-                is_bundle: false
-
-            request:
-                type: xml
-                dir: '%kernel.project_dir%/src/Appto/Booking/Infrastructure/Persistence/Doctrine/Entity/Request'
-                prefix: Appto\Booking\Domain\Request
-                is_bundle: false

@@ -1,0 +1,32 @@
+parameters:
+    user_csv_url: '%env(resolve:USER_CSV_URL)%'
+
+services:
+    # default configuration for services in *this* file
+    _defaults:
+        autowire: true      # Automatically injects dependencies in your services.
+        autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+
+
+#    Appto\User\Infrastructure\Persistence\:
+#        resource: '%kernel.project_dir%/src/Appto/User/Infrastructure/Persistence/**/*Repository.php'
+#        autoconfigure: true
+
+    Appto\User\Domain\UserRepository: '@Appto\User\Infrastructure\Persistence\Csv\CsvUserRepository'
+
+    Appto\User\Infrastructure\Persistence\Csv\CsvUserRepository:
+        arguments:
+            - '@Feeder\FeedReader\CsvFeedReader'
+
+
+    #Feed Reader Service
+    Feeder\FeedReader\CsvFeedReader:
+        arguments: ['@Feeder\Resource\HttpResource', '@Feeder\FeedReader\Separator']
+
+    Feeder\Resource\HttpResource:
+        arguments: ['%user_csv_url%']
+
+    Feeder\FeedReader\Separator:
+        arguments: ["\n", ","]
+
+

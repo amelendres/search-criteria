@@ -1,0 +1,7 @@
+services:
+    _defaults:
+        autowire: true
+
+    Appto\User\Infrastructure\Api\:
+        resource: '%kernel.project_dir%/src/Appto/User/Infrastructure/Api/**/*Controller.php'
+        tags: [ controller.service_arguments ]
