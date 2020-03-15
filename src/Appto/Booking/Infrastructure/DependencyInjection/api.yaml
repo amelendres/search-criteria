@@ -1,7 +1,0 @@
-services:
-    _defaults:
-        autowire: true
-
-    Appto\Booking\Infrastructure\Api\:
-        resource: '%kernel.project_dir%/src/Appto/Booking/Infrastructure/Api/**/*Controller.php'
-        tags: [ controller.service_arguments ]
