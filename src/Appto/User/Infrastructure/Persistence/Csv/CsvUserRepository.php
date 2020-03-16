@@ -2,6 +2,7 @@
 
 namespace Appto\User\Infrastructure\Persistence\Csv;
 
+use Appto\User\Domain\Criteria\Criteria;
 use Appto\User\Domain\User;
 use Appto\User\Domain\UserRepository;
 use Feeder\FeedReader\CsvFeedReader;
@@ -9,11 +10,12 @@ use Feeder\FeedReader\CsvFeedReader;
 class CsvUserRepository implements UserRepository
 {
     private $csvReader;
+    private $criteria;
 
-    public function __construct(CsvFeedReader $csvReader)
+    public function __construct(CsvFeedReader $csvReader, Criteria $criteria)
     {
         $this->csvReader = $csvReader;
-
+        $this->criteria = $criteria;
     }
 
     /**
@@ -22,6 +24,7 @@ class CsvUserRepository implements UserRepository
     public function all() : array
     {
         $feeds = $this->csvReader->read();
+        $filteredFeeds = $this->criteria->execute($feeds);
 
         return array_map(
             function ($item) {
@@ -36,7 +39,7 @@ class CsvUserRepository implements UserRepository
                     $item[7]
                 );
             },
-            $feeds
+            $filteredFeeds
         );
     }
 }
