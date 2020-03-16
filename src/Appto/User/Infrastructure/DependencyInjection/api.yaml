@@ -5,3 +5,6 @@ services:
     Appto\User\Infrastructure\Api\:
         resource: '%kernel.project_dir%/src/Appto/User/Infrastructure/Api/**/*Controller.php'
         tags: [ controller.service_arguments ]
+
+    Appto\Common\Infrastructure\Symfony\Messenger\QueryBus: ~
+    Appto\User\Infrastructure\Api\Presenter\FindAllUserPresenter: ~

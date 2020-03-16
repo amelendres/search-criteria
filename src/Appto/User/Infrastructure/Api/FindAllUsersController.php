@@ -3,13 +3,14 @@
 namespace Appto\User\Infrastructure\Api;
 
 
+use Appto\Common\Infrastructure\Symfony\Messenger\QueryBus;
 use Appto\User\Application\FindAllUsersQuery;
+use Appto\User\Infrastructure\Api\Presenter\FindAllUserPresenter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use OpenApi\Annotations as OA;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -37,22 +38,24 @@ class FindAllUsersController extends AbstractController
      *          response=200,
      *          description="Success",
      *          @OA\JsonContent(
-     *             type="array",
-     *             @OA\Items(ref="#/components/schemas/User")
+     *             type="array"
      *          )
      *     )
      * )
      */
     public function find(
         Request $request,
-        MessageBusInterface $queryBus
+        QueryBus $queryBus,
+        FindAllUserPresenter $presenter
     ) {
 
-        $users =  $queryBus->dispatch(
-            new FindAllUsersQuery()
+        $presenter->write(
+            $queryBus->query(
+                new FindAllUsersQuery()
+            )
         );
 
-        return new JsonResponse($users, Response::HTTP_OK);
+        return new JsonResponse($presenter->read(), Response::HTTP_OK);
 
     }
 
