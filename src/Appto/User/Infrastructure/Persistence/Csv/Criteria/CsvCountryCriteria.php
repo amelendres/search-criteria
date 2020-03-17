@@ -2,7 +2,6 @@
 
 namespace Appto\User\Infrastructure\Persistence\Csv\Criteria;
 
-
 use Appto\User\Domain\Criteria\Criteria;
 
 class CsvCountryCriteria implements Criteria
