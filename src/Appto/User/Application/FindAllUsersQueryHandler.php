@@ -9,22 +9,22 @@ use Appto\User\Domain\UserRepository;
 class FindAllUsersQueryHandler
 {
     private $userRepository;
-    private $criteriaComposite;
+    private $searchCriteriaComposite;
 
     public function __construct(UserRepository $userRepository, CriteriaComposite $criteria)
     {
         $this->userRepository = $userRepository;
-        $this->criteriaComposite = $criteria;
+        $this->searchCriteriaComposite = $criteria;
     }
 
     public function __invoke(FindAllUsersQuery $query) : array
     {
-        $this->buildSearchCriteria($query->searchCriteria());
+        $this->buildSearchCriteriaComposite($query->searchCriteria());
 
-        return $this->userRepository->findByCriteria($this->criteriaComposite);
+        return $this->userRepository->findByCriteria($this->searchCriteriaComposite);
     }
 
-    private function buildSearchCriteria(SearchCriteriaDefinition $searchCriteriaDefinition) : void
+    private function buildSearchCriteriaComposite(SearchCriteriaDefinition $searchCriteriaDefinition) : void
     {
         $searchCriteriaParams = $searchCriteriaDefinition->filters;
         $searchCriteriaParams['order'] = $searchCriteriaDefinition->order;
@@ -37,7 +37,7 @@ class FindAllUsersQueryHandler
             //WIP validate input value with VO
             $searchCriteria = new $searchCriteriaFQNS($value);
 
-            $this->criteriaComposite->add($searchCriteria);
+            $this->searchCriteriaComposite->add($searchCriteria);
         }
     }
 }
