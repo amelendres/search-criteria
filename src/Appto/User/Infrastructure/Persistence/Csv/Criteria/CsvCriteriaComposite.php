@@ -34,10 +34,4 @@ class CsvCriteriaComposite implements Criteria, CriteriaComposite
             $this->add($criteria);
         }, $criteria);
     }
-
-    public function get(string $key) : Criteria
-    {
-        //todo validate
-        return $this->criteria[$key];
-    }
 }

@@ -4,6 +4,7 @@ namespace Appto\User\Infrastructure\Api;
 
 
 use Appto\Common\Infrastructure\Symfony\Messenger\QueryBus;
+use Appto\User\Application\Definition\SearchCriteriaDefinition;
 use Appto\User\Application\FindAllUsersQuery;
 use Appto\User\Infrastructure\Api\Presenter\FindAllUserPresenter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -48,14 +49,16 @@ class FindAllUsersController extends AbstractController
         QueryBus $queryBus,
         FindAllUserPresenter $presenter
     ) {
-        $searchCriteria = [];
-        $searchCriteria['activationLength'] = $request->query->get('activation_length');
-        $searchCriteria['country'] = $request->query->get('countries');
-        $searchCriteria['order'] = $request->query->get('order') ?? ['name' => 'ASC', 'lastName' => 'ASC'];
+        $filters = [];
+        $filters['activationLength'] = $request->query->get('activation_length');
+        $filters['country'] = $request->query->get('countries');
+        $order = $request->query->get('order') ?? ['name' => 'ASC', 'lastName' => 'ASC'];
 
         $presenter->write(
             $queryBus->query(
-                new FindAllUsersQuery(array_filter($searchCriteria))
+                new FindAllUsersQuery(
+                    new SearchCriteriaDefinition(array_filter($filters), $order)
+                )
             )
         );
 

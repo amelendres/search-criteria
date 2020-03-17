@@ -17,7 +17,7 @@ class CsvOrderCriteria implements Criteria
         return $feeds;
     }
 
-    public function setCriteria($criteria) : void
+    public function _construct($criteria)
     {
         $this->fields = $criteria;
     }

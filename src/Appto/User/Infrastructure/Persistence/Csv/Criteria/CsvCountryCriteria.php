@@ -9,9 +9,10 @@ class CsvCountryCriteria implements Criteria
 {
     private $countries;
 
-    public function setCriteria($criteria): void
+    public function __construct(array $countries)
     {
-        $this->countries = $criteria;
+        //WIP guard
+        $this->countries = $countries;
     }
 
     public function execute(array $feeds) : array

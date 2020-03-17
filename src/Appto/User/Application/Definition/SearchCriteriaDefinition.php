@@ -4,21 +4,18 @@ namespace Appto\User\Application\Definition;
 
 class SearchCriteriaDefinition
 {
-    public $activationLength;
-    public $country;
+    public $filters;
     public $order;
 
     /**
-     * @param string[] $country
+     * @param string[] $filters
      * @param string[] $order
      */
     public function __construct(
-        int $activationLength,
-        array $country,
+        array $filters,
         array $order
     ) {
-        $this->activationLength = $activationLength;
-        $this->country = $country;
+        $this->filters = $filters;
         $this->order = $order;
     }
 }

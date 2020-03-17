@@ -18,7 +18,7 @@ class CsvActivationLengthCriteria implements Criteria
         return array_values($filteredFeeds);
     }
 
-    public function setCriteria($criteria) : void
+    public function __construct($criteria)
     {
         $this->activationLength = $criteria;
     }
