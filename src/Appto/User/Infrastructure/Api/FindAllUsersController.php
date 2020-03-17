@@ -3,7 +3,9 @@
 namespace Appto\User\Infrastructure\Api;
 
 
+use Appto\Common\Domain\Number\NaturalNumber;
 use Appto\Common\Infrastructure\Symfony\Messenger\QueryBus;
+use Appto\User\Application\Definition\FilterDefinition;
 use Appto\User\Application\Definition\SearchCriteriaDefinition;
 use Appto\User\Application\FindAllUsersQuery;
 use Appto\User\Infrastructure\Api\Presenter\FindAllUserPresenter;
@@ -50,8 +52,12 @@ class FindAllUsersController extends AbstractController
         FindAllUserPresenter $presenter
     ) {
         $filters = [];
-        $filters['activationLength'] = $request->query->get('activation_length');
-        $filters['country'] = $request->query->get('countries');
+        $filters[] = $request->query->get('activation_length')
+            ? new FilterDefinition('activationLength', $request->query->get('activation_length'))
+            : null;
+        $filters[] = $request->query->get('countries')
+        ? new FilterDefinition('country', $request->query->get('countries'))
+        : null ;
         $order = $request->query->get('order') ?? ['name' => 'ASC', 'lastName' => 'ASC'];
 
         $presenter->write(

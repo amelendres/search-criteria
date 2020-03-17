@@ -2,6 +2,9 @@
     "amelendres/feeder": {
         "version": "dev-master"
     },
+    "appto/php-value-objects": {
+        "version": "0.3"
+    },
     "behat/behat": {
         "version": "3.6.x-dev"
     },

@@ -8,6 +8,11 @@ class CsvActivationLengthCriteria implements Criteria
 {
     private $activationLength;
 
+    public function __construct(int $length)
+    {
+        $this->activationLength = $length;
+    }
+
     public function execute(array $feeds): array
     {
         $filteredFeeds = array_filter($feeds, function ($item) {
@@ -16,10 +21,5 @@ class CsvActivationLengthCriteria implements Criteria
         });
 
         return array_values($filteredFeeds);
-    }
-
-    public function __construct($criteria)
-    {
-        $this->activationLength = $criteria;
     }
 }

@@ -10,7 +10,6 @@ class CsvCountryCriteria implements Criteria
 
     public function __construct(array $countries)
     {
-        //WIP guard
         $this->countries = $countries;
     }
 
