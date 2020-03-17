@@ -7,11 +7,6 @@ services:
         autowire: true      # Automatically injects dependencies in your services.
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
 
-
-#    Appto\User\Infrastructure\Persistence\:
-#        resource: '%kernel.project_dir%/src/Appto/User/Infrastructure/Persistence/**/*Repository.php'
-#        autoconfigure: true
-
     Appto\User\Infrastructure\Persistence\Csv\:
         resource: '%kernel.project_dir%/src/Appto/User/Infrastructure/Persistence/Csv/**/*{Assembler}.php'
         autoconfigure: true
@@ -27,19 +22,7 @@ services:
     Appto\User\Infrastructure\Persistence\Csv\Criteria\CsvCriteriaComposite:
         calls:
             - setProviders:
-                   - { country: 'Appto\User\Infrastructure\Persistence\Csv\Criteria\CsvCountryCriteria', activationLength: 'Appto\User\Infrastructure\Persistence\Csv\Criteria\CsvActivationLengthCriteria', order: 'Appto\User\Infrastructure\Persistence\Csv\Criteria\CsvOrderCriteria'}
-
-#        calls:
-#            - setCriteria:
-#                #arguments:
-#                    - { param1: '@Appto\User\Infrastructure\Persistence\Csv\Criteria\OrderByNameAndLastNameCriteria'}
-#                    - { param1: '@Appto\User\Infrastructure\Persistence\Csv\Criteria\CsvCountryCriteria', param2: '@Appto\User\Infrastructure\Persistence\Csv\Criteria\CsvActivationLengthCriteria', param3: '@Appto\User\Infrastructure\Persistence\Csv\Criteria\OrderByNameAndLastNameCriteria'}
-
-    #            -   method: setCriteria
-#                arguments:
-#                    - { param1: '@Appto\User\Infrastructure\Persistence\Csv\Criteria\OrderByNameAndLastNameCriteria'}
-
-
+                   - { Appto\User\Domain\Criteria\CountryFilter: 'Appto\User\Infrastructure\Persistence\Csv\Criteria\CsvCountryCriteria', Appto\User\Domain\Criteria\ActivationLengthFilter: 'Appto\User\Infrastructure\Persistence\Csv\Criteria\CsvActivationLengthCriteria', Appto\User\Domain\Criteria\Order: 'Appto\User\Infrastructure\Persistence\Csv\Criteria\CsvOrderCriteria'}
 
     #Feed Reader Service
     Feeder\FeedReader\CsvFeedReader:

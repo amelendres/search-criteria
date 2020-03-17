@@ -25,7 +25,7 @@ class CountryFilter implements Filter
 
     public function name() : string
     {
-        return 'country';
+        return static::class;
     }
 
     public function value()

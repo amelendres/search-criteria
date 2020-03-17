@@ -2,8 +2,7 @@
 
 namespace Appto\User\Domain\Criteria;
 
-Interface Filter
+Interface Filter extends SearchCriteria
 {
-    public function name(): string;
-    public function value();
+
 }

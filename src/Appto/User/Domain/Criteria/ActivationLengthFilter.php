@@ -15,7 +15,7 @@ class ActivationLengthFilter implements Filter
 
     public function name() : string
     {
-        return 'activationLength';
+        return static::class;
     }
 
     public function value()

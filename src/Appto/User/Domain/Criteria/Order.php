@@ -2,7 +2,7 @@
 
 namespace Appto\User\Domain\Criteria;
 
-class Order implements Filter
+class Order implements SearchCriteria
 {
     private $fields;
 
@@ -13,11 +13,11 @@ class Order implements Filter
 
     public function name() : string
     {
-        return 'order';
+        return static::class;
     }
 
     public function value()
     {
-        return $this->value();
+        return $this->fields;
     }
 }

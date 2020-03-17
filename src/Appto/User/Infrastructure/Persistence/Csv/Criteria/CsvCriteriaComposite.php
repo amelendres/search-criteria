@@ -12,10 +12,6 @@ class CsvCriteriaComposite implements Criteria, CriteriaComposite
 
     public function execute(array $feeds) : array
     {
-        if (empty($this->criteria)) {
-            throw new EmptyCriteriaCompositeException();
-        }
-
         /** @var Criteria $rule */
         foreach ($this->criteria as $rule) {
             $feeds = $rule->execute($feeds);
@@ -53,7 +49,15 @@ class CsvCriteriaComposite implements Criteria, CriteriaComposite
 
     public function provider(string $key) : string
     {
-        //WIP validate if exists
+        if (!$this->has($key)) {
+            throw new UndefinedCriteriaProviderException($key);
+        }
+
         return $this->providers[$key];
+    }
+
+    private function has(string $key): bool
+    {
+        return isset($this->providers[$key]);
     }
 }
