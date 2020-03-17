@@ -48,10 +48,14 @@ class FindAllUsersController extends AbstractController
         QueryBus $queryBus,
         FindAllUserPresenter $presenter
     ) {
+        $searchCriteria = [];
+        $searchCriteria['activationLength'] = $request->query->get('activation_length');
+        $searchCriteria['country'] = $request->query->get('countries');
+        $searchCriteria['order'] = $request->query->get('order') ?? ['name' => 'ASC', 'lastName' => 'ASC'];
 
         $presenter->write(
             $queryBus->query(
-                new FindAllUsersQuery()
+                new FindAllUsersQuery(array_filter($searchCriteria))
             )
         );
 

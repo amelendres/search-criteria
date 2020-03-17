@@ -12,22 +12,28 @@ services:
 #        resource: '%kernel.project_dir%/src/Appto/User/Infrastructure/Persistence/**/*Repository.php'
 #        autoconfigure: true
 
-    Appto\User\Infrastructure\Persistence\Csv\Criteria\:
-        resource: '%kernel.project_dir%/src/Appto/User/Infrastructure/Persistence/Csv/Criteria/*Criteria.php'
+    Appto\User\Infrastructure\Persistence\Csv\:
+        resource: '%kernel.project_dir%/src/Appto/User/Infrastructure/Persistence/Csv/**/*{Assembler,Criteria}.php'
         autoconfigure: true
 
     Appto\User\Domain\UserRepository: '@Appto\User\Infrastructure\Persistence\Csv\CsvUserRepository'
+    Appto\User\Domain\Criteria\CriteriaComposite: '@Appto\User\Infrastructure\Persistence\Csv\Criteria\CsvCriteriaComposite'
 
     Appto\User\Infrastructure\Persistence\Csv\CsvUserRepository:
         arguments:
             - '@Feeder\FeedReader\CsvFeedReader'
-            - '@Appto\User\Infrastructure\Persistence\Csv\Criteria\CriteriaComposite'
+            - '@Appto\User\Infrastructure\Persistence\Csv\CsvUserAssembler'
 
-    Appto\User\Infrastructure\Persistence\Csv\Criteria\CriteriaComposite:
-        calls:
-            -   method: setCriterias
-                arguments:
-                    - { param1: '@Appto\User\Infrastructure\Persistence\Csv\Criteria\OrderByNameAndLastNameCriteria'}
+    Appto\User\Infrastructure\Persistence\Csv\Criteria\CsvCriteriaComposite: ~
+#        calls:
+#            - setCriteria:
+#                #arguments:
+#                    - { param1: '@Appto\User\Infrastructure\Persistence\Csv\Criteria\OrderByNameAndLastNameCriteria'}
+#                    - { param1: '@Appto\User\Infrastructure\Persistence\Csv\Criteria\CsvCountryCriteria', param2: '@Appto\User\Infrastructure\Persistence\Csv\Criteria\CsvActivationLengthCriteria', param3: '@Appto\User\Infrastructure\Persistence\Csv\Criteria\OrderByNameAndLastNameCriteria'}
+
+    #            -   method: setCriteria
+#                arguments:
+#                    - { param1: '@Appto\User\Infrastructure\Persistence\Csv\Criteria\OrderByNameAndLastNameCriteria'}
 
 
 
