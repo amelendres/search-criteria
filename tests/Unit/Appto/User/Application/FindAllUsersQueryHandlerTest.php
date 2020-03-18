@@ -25,7 +25,7 @@ class FindAllUsersQueryHandlerTest extends TestCase
 
     /** @var UserRepositoryMock */
     private $userRepository;
-    private $criteriaComposite;
+    private $searchCriteria;
     private $faker;
 
 
@@ -34,13 +34,13 @@ class FindAllUsersQueryHandlerTest extends TestCase
         $this->userRepository = $this->userRepository ?? new UserRepositoryMock(
                 $this->getMockBuilder(UserRepository::class)
             );
-        $this->criteriaComposite = $this->criteriaComposite ?? new CriteriaCompositeMock(
+        $this->searchCriteria = $this->searchCriteria ?? new CriteriaCompositeMock(
                 $this->getMockBuilder(CriteriaComposite::class)
             );
 
         $this->handler = $this->handler ?? new FindAllUsersQueryHandler(
                 $this->userRepository->mock(),
-                $this->criteriaComposite->mock()
+                $this->searchCriteria->mock()
             );
 
         $this->faker = Factory::create();
@@ -59,8 +59,8 @@ class FindAllUsersQueryHandlerTest extends TestCase
             UserMother::random(),
         ];
 
-        $this->userRepository->itShouldFindAll($users);
-        $this->criteriaComposite->itShouldGetOrderProvider(CsvOrderCriteria::class);
+        $this->searchCriteria->itShouldGetOrderProvider(CsvOrderCriteria::class);
+        $this->userRepository->itShouldFind($users);
 
         $result = $this->handle($command);
 
@@ -76,7 +76,7 @@ class FindAllUsersQueryHandlerTest extends TestCase
         $users = [];
 
         $this->userRepository->itShouldNotFind($users);
-        $this->criteriaComposite->itShouldGetOrderProvider(CsvOrderCriteria::class);
+        $this->searchCriteria->itShouldGetOrderProvider(CsvOrderCriteria::class);
 
         $result = $this->handle($command);
 
@@ -104,8 +104,8 @@ class FindAllUsersQueryHandlerTest extends TestCase
             UserMother::random(),
         ];
 
-        $this->userRepository->itShouldFindAll($users);
-        $this->criteriaComposite->itShouldGetOrderAndCountryProvider(CsvOrderCriteria::class, CsvCountryCriteria::class);
+        $this->userRepository->itShouldFind($users);
+        $this->searchCriteria->itShouldGetOrderAndCountryProvider(CsvOrderCriteria::class, CsvCountryCriteria::class);
 
         $result = $this->handle($command);
 
@@ -149,8 +149,8 @@ class FindAllUsersQueryHandlerTest extends TestCase
             UserMother::random(),
         ];
 
-        $this->userRepository->itShouldFindAll($users);
-        $this->criteriaComposite->itShouldGetOrderAndActivationLengthProvider(
+        $this->userRepository->itShouldFind($users);
+        $this->searchCriteria->itShouldGetOrderAndActivationLengthProvider(
             CsvOrderCriteria::class,
             CsvActivationLengthCriteria::class
         );

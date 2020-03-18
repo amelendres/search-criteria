@@ -11,7 +11,7 @@ class UserRepositoryMock extends Mock
     /**
      * @param User[] $result
      */
-    public function itShouldFindAll(array $result) : void
+    public function itShouldFind(array $result) : void
     {
         $this->mock()
             ->expects(TestCase::once())
