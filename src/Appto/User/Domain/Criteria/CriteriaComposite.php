@@ -2,7 +2,7 @@
 
 namespace Appto\User\Domain\Criteria;
 
-interface CriteriaComposite
+interface CriteriaComposite extends Criteria
 {
     public function add(Criteria $criteria): void;
     public function provider(string $key): string;

@@ -15,7 +15,7 @@ class UserRepositoryMock extends Mock
     {
         $this->mock()
             ->expects(TestCase::once())
-            ->method('all')
+            ->method('findByCriteria')
             //->with(TestCase::equalTo($boatId))
             ->willReturn($result);
     }
@@ -27,7 +27,7 @@ class UserRepositoryMock extends Mock
     {
         $this->mock()
             ->expects(TestCase::once())
-            ->method('all')
+            ->method('findByCriteria')
             //->with(TestCase::equalTo($boatId))
             ->willReturn($result);
     }

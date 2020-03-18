@@ -5,7 +5,7 @@ namespace Appto\User\Infrastructure\Persistence\Csv\Criteria;
 use Appto\User\Domain\Criteria\Criteria;
 use Appto\User\Domain\Criteria\CriteriaComposite;
 
-class CsvCriteriaComposite implements Criteria, CriteriaComposite
+class CsvCriteriaComposite implements CriteriaComposite
 {
     private $criteria;
     private $providers;

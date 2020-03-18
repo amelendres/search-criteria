@@ -8,7 +8,6 @@ use Appto\User\Application\Exception\InvalidSearchCriteriaParameterException;
 use Appto\User\Domain\Criteria\ActivationLengthFilter;
 use Appto\User\Domain\Criteria\CountryFilter;
 use Appto\User\Domain\Criteria\CriteriaComposite;
-use Appto\User\Domain\Criteria\Filter;
 use Appto\User\Domain\Criteria\Order;
 use Appto\User\Domain\Criteria\SearchCriteria;
 use Appto\User\Domain\UserRepository;
@@ -37,7 +36,6 @@ class FindAllUsersQueryHandler
             $this->addCriteria($searchCriteria);
         }
     }
-
 
     private function addCriteria(SearchCriteria $searchCriteria): void
     {
