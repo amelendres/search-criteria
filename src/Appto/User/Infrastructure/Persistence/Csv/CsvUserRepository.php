@@ -3,27 +3,21 @@
 namespace Appto\User\Infrastructure\Persistence\Csv;
 
 use Appto\User\Domain\Criteria\Criteria;
-use Appto\User\Domain\Criteria\CriteriaComposite;
 use Appto\User\Domain\Filter;
 use Appto\User\Domain\User;
 use Appto\User\Domain\UserRepository;
-use Appto\User\Infrastructure\Persistence\Csv\Criteria\CsvCountryCriteria;
-use Appto\User\Infrastructure\Persistence\Csv\Criteria\CsvCriteriaComposite;
 use Feeder\FeedReader\CsvFeedReader;
 
 class CsvUserRepository implements UserRepository
 {
     private $csvReader;
-//    private $criteria;
     private $userAssembler;
 
     public function __construct(
         CsvFeedReader $csvReader,
-        //CsvCriteriaComposite $criteria,
         CsvUserAssembler $userAssembler
     ) {
         $this->csvReader = $csvReader;
-//        $this->criteria = $criteria;
         $this->userAssembler = $userAssembler;
     }
 
@@ -33,7 +27,6 @@ class CsvUserRepository implements UserRepository
     public function all() : array
     {
         $feeds = $this->csvReader->read();
-//        $filteredFeeds = $this->criteria->execute($feeds);
 
         return $this->feedsAssemble($feeds);
     }
