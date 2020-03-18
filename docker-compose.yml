@@ -2,7 +2,7 @@ version: '3.6'
 
 services:
     nginx:
-        container_name: appto-booking-nginx
+        container_name: appto-users-nginx
         image: nginx:1.15-alpine
         restart: unless-stopped
         ports:
@@ -14,7 +14,7 @@ services:
             - php
 
     php:
-        container_name: appto-booking-php
+        container_name: appto-users-php
         build:
             context: .
             dockerfile: Dockerfile
@@ -25,14 +25,3 @@ services:
             - .:/app:delegated
         env_file:
             - .env
-        depends_on:
-            - mysql
-
-    mysql:
-        container_name: appto-booking-mysql
-        image: mariadb:10.4
-        restart: unless-stopped
-        ports:
-            - "3306:3306"
-        environment:
-            MYSQL_ROOT_PASSWORD: root
