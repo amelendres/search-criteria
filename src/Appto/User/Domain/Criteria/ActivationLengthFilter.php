@@ -8,9 +8,9 @@ class ActivationLengthFilter implements Filter
 {
     private $length;
 
-    public function __construct(NaturalNumber $length)
+    public function __construct(int $length)
     {
-        $this->length = $length;
+        $this->length = new NaturalNumber($length);
     }
 
     public function name() : string

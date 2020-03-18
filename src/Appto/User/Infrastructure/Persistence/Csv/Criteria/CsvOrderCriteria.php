@@ -8,7 +8,7 @@ class CsvOrderCriteria implements Criteria
 {
     private $fields;
 
-    public function __construct(array $fields)
+    public function setValue($fields): void
     {
         $this->fields = $fields;
     }

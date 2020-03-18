@@ -20,19 +20,22 @@ class CsvCriteriaComposite implements CriteriaComposite
         return $feeds;
     }
 
-    public function add(Criteria $criteria) : void
+    public function setValue($value) : void
     {
-        $this->criteria[get_class($criteria)] = $criteria;
+        // disabled set criteria
     }
 
-    public function setCriteria($criteria) : void
+    public function criteria(string $key) : Criteria
     {
-        array_map(
-            function ($criteria) {
-                $this->add($criteria);
-            },
-            $criteria
-        );
+        $criteria = $this->find($key);
+
+        if (!$criteria) {
+            $criteriaFQNS = $this->provider($key);
+            $criteria = new $criteriaFQNS();
+            $this->add($criteria);
+        }
+
+        return $criteria;
     }
 
     public function setProviders(array $providers) : void
@@ -47,17 +50,37 @@ class CsvCriteriaComposite implements CriteriaComposite
 
     }
 
-    public function provider(string $key) : string
+    private function add(Criteria $criteria) : void
     {
-        if (!$this->has($key)) {
+        $this->criteria[get_class($criteria)] = $criteria;
+    }
+
+    public function setCriteria($criteria) : void
+    {
+        array_map(
+            function ($criteria) {
+                $this->add($criteria);
+            },
+            $criteria
+        );
+    }
+
+    private function has(string $key) : bool
+    {
+        return isset($this->criteria[$key]);
+    }
+
+    private function find(string $key) : ?Criteria
+    {
+        return $this->criteria[$key] ?? null;
+    }
+
+    private function provider(string $key) : string
+    {
+        if (!$this->providers[$key]) {
             throw new UndefinedCriteriaProviderException($key);
         }
 
         return $this->providers[$key];
-    }
-
-    private function has(string $key): bool
-    {
-        return isset($this->providers[$key]);
     }
 }

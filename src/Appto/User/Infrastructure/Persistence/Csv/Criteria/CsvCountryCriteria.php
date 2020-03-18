@@ -8,7 +8,7 @@ class CsvCountryCriteria implements Criteria
 {
     private $countries;
 
-    public function __construct(array $countries)
+    public function setValue($countries): void
     {
         $this->countries = $countries;
     }

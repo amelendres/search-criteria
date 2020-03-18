@@ -8,7 +8,7 @@ class CsvActivationLengthCriteria implements Criteria
 {
     private $activationLength;
 
-    public function __construct(int $length)
+    public function setValue($length): void
     {
         $this->activationLength = $length;
     }

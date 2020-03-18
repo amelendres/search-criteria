@@ -2,31 +2,31 @@
 
 namespace Test\Unit\Appto\User\Infrastructure\Persistence\Mock;
 
+use Appto\User\Domain\Criteria\Criteria;
 use PHPUnit\Framework\TestCase;
 use Test\Unit\Mock;
 
 class CriteriaCompositeMock extends Mock
 {
-
-    public function itShouldGetOrderAndActivationLengthProvider(string $order, string $activationLength) : void
+    public function itShouldGetOrderAndActivationLengthCriteria(Criteria $order, Criteria $activationLength) : void
     {
         $this->mock()
-            ->method('provider')
+            ->method('criteria')
             ->willReturnOnConsecutiveCalls($activationLength, $order);
     }
 
-    public function itShouldGetOrderAndCountryProvider(string $order, string $country) : void
+    public function itShouldGetOrderAndCountryCriteria(Criteria $order, Criteria $country) : void
     {
         $this->mock()
-            ->method('provider')
+            ->method('criteria')
             ->willReturnOnConsecutiveCalls($country, $order);
     }
 
-    public function itShouldGetOrderProvider(string $result) : void
+    public function itShouldGetOrderCriteria(Criteria $result) : void
     {
         $this->mock()
             ->expects(TestCase::once())
-            ->method('provider')
+            ->method('criteria')
             ->willReturn($result);
     }
 }

@@ -2,57 +2,43 @@
 
 namespace Appto\User\Application;
 
-use Appto\Common\Domain\Number\NaturalNumber;
 use Appto\User\Application\Definition\SearchCriteriaDefinition;
 use Appto\User\Application\Exception\InvalidSearchCriteriaParameterException;
 use Appto\User\Domain\Criteria\ActivationLengthFilter;
 use Appto\User\Domain\Criteria\CountryFilter;
 use Appto\User\Domain\Criteria\CriteriaComposite;
 use Appto\User\Domain\Criteria\Order;
-use Appto\User\Domain\Criteria\SearchCriteria;
 use Appto\User\Domain\UserRepository;
 
 class FindUsersQueryHandler
 {
     private $userRepository;
-    private $criteriaComposite;
+    private $searchCriteriaComposite;
 
-    public function __construct(UserRepository $userRepository, CriteriaComposite $criteria)
+    public function __construct(UserRepository $userRepository, CriteriaComposite $criteriaComposite)
     {
         $this->userRepository = $userRepository;
-        $this->criteriaComposite = $criteria;
+        $this->searchCriteriaComposite = $criteriaComposite;
     }
 
     public function __invoke(FindUsersQuery $query) : array
     {
-        $this->buildSearchCriteriaComposite($query->searchCriteria());
-
-        return $this->userRepository->findByCriteria($this->criteriaComposite);
-    }
-
-    private function buildSearchCriteriaComposite(SearchCriteriaDefinition $searchCriteriaDefinition) : void
-    {
-        foreach ($this->buildSearchCriteria($searchCriteriaDefinition) as $searchCriteria) {
-            $this->addCriteria($searchCriteria);
+        foreach ($this->buildSearchCriteria($query->searchCriteria()) as $searchCriteria) {
+            $this->searchCriteriaComposite
+                ->criteria($searchCriteria->name())
+                ->setValue($searchCriteria->value());
         }
+
+        return $this->userRepository->findByCriteria($this->searchCriteriaComposite);
     }
 
-    private function addCriteria(SearchCriteria $searchCriteria): void
-    {
-        $providerFQNS = $this->criteriaComposite->provider($searchCriteria->name());
-        $criteria = new $providerFQNS($searchCriteria->value());
-        $this->criteriaComposite->add($criteria);
-    }
-
-    private function buildSearchCriteria(SearchCriteriaDefinition $searchCriteriaDefinition): array
+    private function buildSearchCriteria(SearchCriteriaDefinition $searchCriteriaDefinition) : array
     {
         $searchCriteria = [];
         try {
             $activationLengthFilter = $searchCriteriaDefinition->filter('activationLength');
             if ($activationLengthFilter) {
-                $searchCriteria[] = new ActivationLengthFilter(
-                    new NaturalNumber($activationLengthFilter->value)
-                );
+                $searchCriteria[] = new ActivationLengthFilter($activationLengthFilter->value);
             }
 
             $countryFilterDefinition = $searchCriteriaDefinition->filter('country');
