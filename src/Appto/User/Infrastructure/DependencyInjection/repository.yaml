@@ -1,0 +1,37 @@
+parameters:
+    user_csv_url: '%env(resolve:USER_CSV_URL)%'
+
+services:
+    # default configuration for services in *this* file
+    _defaults:
+        autowire: true      # Automatically injects dependencies in your services.
+        autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+
+    Appto\User\Infrastructure\Persistence\Csv\:
+        resource: '%kernel.project_dir%/src/Appto/User/Infrastructure/Persistence/Csv/**/*{Assembler}.php'
+        autoconfigure: true
+
+    Appto\User\Domain\UserRepository: '@Appto\User\Infrastructure\Persistence\Csv\CsvUserRepository'
+    Appto\User\Domain\Criteria\CriteriaComposite: '@Appto\User\Infrastructure\Persistence\Csv\Criteria\CsvCriteriaComposite'
+
+    Appto\User\Infrastructure\Persistence\Csv\CsvUserRepository:
+        arguments:
+            - '@Feeder\FeedReader\CsvFeedReader'
+            - '@Appto\User\Infrastructure\Persistence\Csv\CsvUserAssembler'
+
+    Appto\User\Infrastructure\Persistence\Csv\Criteria\CsvCriteriaComposite:
+        calls:
+            - setProviders:
+                   - { Appto\User\Domain\Criteria\CountryFilter: 'Appto\User\Infrastructure\Persistence\Csv\Criteria\CsvCountryCriteria', Appto\User\Domain\Criteria\ActivationLengthFilter: 'Appto\User\Infrastructure\Persistence\Csv\Criteria\CsvActivationLengthCriteria', Appto\User\Domain\Criteria\Order: 'Appto\User\Infrastructure\Persistence\Csv\Criteria\CsvOrderCriteria'}
+
+    #Feed Reader Service
+    Feeder\FeedReader\CsvFeedReader:
+        arguments: ['@Feeder\Resource\HttpResource', '@Feeder\FeedReader\Separator']
+
+    Feeder\Resource\HttpResource:
+        arguments: ['%user_csv_url%']
+
+    Feeder\FeedReader\Separator:
+        arguments: ["\n", ","]
+
+

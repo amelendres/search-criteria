@@ -1,0 +1,19 @@
+services:
+    # default configuration for services in *this* file
+    _defaults:
+        autowire: true      # Automatically injects dependencies in your services.
+        autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+
+    Appto\User\Application\:
+        resource: '%kernel.project_dir%/src/Appto/User/Application/*CommandHandler.php'
+        autoconfigure: true
+#        public: true
+        tags:
+            - { name: messenger.message_handler, bus: command.bus }
+
+    query_handlers:
+        namespace: Appto\User\Application\
+        resource: '%kernel.project_dir%/src/Appto/User/Application/*QueryHandler.php'
+        autoconfigure: false
+        tags:
+            - { name: messenger.message_handler, bus: query.bus }
