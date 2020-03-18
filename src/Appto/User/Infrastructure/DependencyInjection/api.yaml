@@ -7,4 +7,4 @@ services:
         tags: [ controller.service_arguments ]
 
     Appto\Common\Infrastructure\Symfony\Messenger\QueryBus: ~
-    Appto\User\Infrastructure\Api\Presenter\FindAllUserPresenter: ~
+    Appto\User\Infrastructure\Api\Presenter\FindUsersPresenter: ~
