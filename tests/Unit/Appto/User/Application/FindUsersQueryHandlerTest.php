@@ -9,9 +9,6 @@ use Appto\User\Application\FindUsersQuery;
 use Appto\User\Application\FindUsersQueryHandler;
 use Appto\User\Domain\Criteria\CriteriaComposite;
 use Appto\User\Domain\UserRepository;
-use Appto\User\Infrastructure\Persistence\Csv\Criteria\CsvActivationLengthCriteria;
-use Appto\User\Infrastructure\Persistence\Csv\Criteria\CsvCountryCriteria;
-use Appto\User\Infrastructure\Persistence\Csv\Criteria\CsvOrderCriteria;
 use Faker\Factory;
 use PHPUnit\Framework\TestCase;
 use Test\Unit\Appto\User\Domain\Mother\UserMother;
@@ -50,16 +47,14 @@ class FindUsersQueryHandlerTest extends TestCase
     public function testItShouldFindAllUsers()
     {
         $order = [];
-        $command = new FindUsersQuery(
-            new SearchCriteriaDefinition([], $order)
-        );
+        $command = new FindUsersQuery(new SearchCriteriaDefinition([], $order));
+
         $users = [
             UserMother::random(),
             UserMother::random(),
             UserMother::random(),
         ];
 
-        $this->searchCriteria->itShouldGetOrderProvider(CsvOrderCriteria::class);
         $this->userRepository->itShouldFind($users);
 
         $result = $this->handle($command);
@@ -70,27 +65,20 @@ class FindUsersQueryHandlerTest extends TestCase
 
     public function testItShouldNotFind()
     {
-        $command = new FindUsersQuery(
-            new SearchCriteriaDefinition([], [])
-        );
+        $command = new FindUsersQuery(new SearchCriteriaDefinition([], []));
         $users = [];
 
         $this->userRepository->itShouldNotFind($users);
-        $this->searchCriteria->itShouldGetOrderProvider(CsvOrderCriteria::class);
 
         $result = $this->handle($command);
 
         self::assertEmpty($result);
-
     }
 
-    /**
-     * @group test
-     */
     public function testItShouldFindWithCountryFilter()
     {
         $order = [];
-        $countries= [
+        $countries = [
             $this->faker->unique()->countryCode,
             $this->faker->unique()->countryCode,
         ];
@@ -105,21 +93,17 @@ class FindUsersQueryHandlerTest extends TestCase
         ];
 
         $this->userRepository->itShouldFind($users);
-        $this->searchCriteria->itShouldGetOrderAndCountryProvider(CsvOrderCriteria::class, CsvCountryCriteria::class);
 
         $result = $this->handle($command);
 
         self::assertNotEmpty($result);
     }
 
-    /**
-     * @group test
-     */
     public function testItShouldFailWithInvalidCountry()
     {
         $this->expectException(InvalidSearchCriteriaParameterException::class);
         $order = [];
-        $countries= ['USa'];
+        $countries = ['USa'];
         $countryFilterDefinition = new FilterDefinition('country', $countries);
         $command = new FindUsersQuery(
             new SearchCriteriaDefinition([$countryFilterDefinition], $order)
@@ -137,7 +121,7 @@ class FindUsersQueryHandlerTest extends TestCase
     public function testItShouldFindWithActivationLengthFilter()
     {
         $order = [];
-        $activationLength = $this->faker->numberBetween(1,30);
+        $activationLength = $this->faker->numberBetween(1, 30);
         $activationLengthFilterDefinition = new FilterDefinition('activationLength', $activationLength);
 
         $command = new FindUsersQuery(
@@ -150,10 +134,6 @@ class FindUsersQueryHandlerTest extends TestCase
         ];
 
         $this->userRepository->itShouldFind($users);
-        $this->searchCriteria->itShouldGetOrderAndActivationLengthProvider(
-            CsvOrderCriteria::class,
-            CsvActivationLengthCriteria::class
-        );
 
         $result = $this->handle($command);
 
