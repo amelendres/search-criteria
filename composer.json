@@ -24,6 +24,7 @@
         "phpunit/phpunit": "^9.0",
         "ramsey/uuid": "^3.9",
         "symfony/intl": "4.4.*",
+        "symfony/web-server-bundle": "4.4.*",
         "zircote/swagger-php": "^3.0"
     },
     "config": {
