@@ -4,7 +4,7 @@ namespace Appto\User\Application;
 
 use Appto\User\Application\Definition\SearchCriteriaDefinition;
 
-class FindAllUsersQuery
+class FindUsersQuery
 {
     private $searchCriteria;
 

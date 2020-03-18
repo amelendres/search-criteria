@@ -5,8 +5,8 @@ namespace Test\Unit\Appto\User\Application;
 use Appto\User\Application\Definition\FilterDefinition;
 use Appto\User\Application\Definition\SearchCriteriaDefinition;
 use Appto\User\Application\Exception\InvalidSearchCriteriaParameterException;
-use Appto\User\Application\FindAllUsersQuery;
-use Appto\User\Application\FindAllUsersQueryHandler;
+use Appto\User\Application\FindUsersQuery;
+use Appto\User\Application\FindUsersQueryHandler;
 use Appto\User\Domain\Criteria\CriteriaComposite;
 use Appto\User\Domain\UserRepository;
 use Appto\User\Infrastructure\Persistence\Csv\Criteria\CsvActivationLengthCriteria;
@@ -19,7 +19,7 @@ use Test\Unit\Appto\User\Infrastructure\Persistence\Mock\CriteriaCompositeMock;
 use Test\Unit\Appto\User\Infrastructure\Persistence\Mock\UserRepositoryMock;
 
 
-class FindAllUsersQueryHandlerTest extends TestCase
+class FindUsersQueryHandlerTest extends TestCase
 {
     private $handler;
 
@@ -38,7 +38,7 @@ class FindAllUsersQueryHandlerTest extends TestCase
                 $this->getMockBuilder(CriteriaComposite::class)
             );
 
-        $this->handler = $this->handler ?? new FindAllUsersQueryHandler(
+        $this->handler = $this->handler ?? new FindUsersQueryHandler(
                 $this->userRepository->mock(),
                 $this->searchCriteria->mock()
             );
@@ -50,7 +50,7 @@ class FindAllUsersQueryHandlerTest extends TestCase
     public function testItShouldFindAllUsers()
     {
         $order = [];
-        $command = new FindAllUsersQuery(
+        $command = new FindUsersQuery(
             new SearchCriteriaDefinition([], $order)
         );
         $users = [
@@ -70,7 +70,7 @@ class FindAllUsersQueryHandlerTest extends TestCase
 
     public function testItShouldNotFind()
     {
-        $command = new FindAllUsersQuery(
+        $command = new FindUsersQuery(
             new SearchCriteriaDefinition([], [])
         );
         $users = [];
@@ -95,7 +95,7 @@ class FindAllUsersQueryHandlerTest extends TestCase
             $this->faker->unique()->countryCode,
         ];
         $countryFilterDefinition = new FilterDefinition('country', $countries);
-        $command = new FindAllUsersQuery(
+        $command = new FindUsersQuery(
             new SearchCriteriaDefinition([$countryFilterDefinition], $order)
         );
         $users = [
@@ -121,7 +121,7 @@ class FindAllUsersQueryHandlerTest extends TestCase
         $order = [];
         $countries= ['USa'];
         $countryFilterDefinition = new FilterDefinition('country', $countries);
-        $command = new FindAllUsersQuery(
+        $command = new FindUsersQuery(
             new SearchCriteriaDefinition([$countryFilterDefinition], $order)
         );
         $users = [];
@@ -140,7 +140,7 @@ class FindAllUsersQueryHandlerTest extends TestCase
         $activationLength = $this->faker->numberBetween(1,30);
         $activationLengthFilterDefinition = new FilterDefinition('activationLength', $activationLength);
 
-        $command = new FindAllUsersQuery(
+        $command = new FindUsersQuery(
             new SearchCriteriaDefinition([$activationLengthFilterDefinition], $order)
         );
         $users = [

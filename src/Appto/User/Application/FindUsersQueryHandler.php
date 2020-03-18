@@ -12,7 +12,7 @@ use Appto\User\Domain\Criteria\Order;
 use Appto\User\Domain\Criteria\SearchCriteria;
 use Appto\User\Domain\UserRepository;
 
-class FindAllUsersQueryHandler
+class FindUsersQueryHandler
 {
     private $userRepository;
     private $criteriaComposite;
@@ -23,7 +23,7 @@ class FindAllUsersQueryHandler
         $this->criteriaComposite = $criteria;
     }
 
-    public function __invoke(FindAllUsersQuery $query) : array
+    public function __invoke(FindUsersQuery $query) : array
     {
         $this->buildSearchCriteriaComposite($query->searchCriteria());
 

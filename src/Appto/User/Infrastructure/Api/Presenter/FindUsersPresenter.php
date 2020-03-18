@@ -4,7 +4,7 @@ namespace Appto\User\Infrastructure\Api\Presenter;
 
 use Appto\Common\Application\ListPresenter;
 
-class FindAllUserPresenter implements ListPresenter
+class FindUsersPresenter implements ListPresenter
 {
     public $data;
 

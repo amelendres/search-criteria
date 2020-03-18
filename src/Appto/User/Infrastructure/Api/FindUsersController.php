@@ -2,13 +2,11 @@
 
 namespace Appto\User\Infrastructure\Api;
 
-
-use Appto\Common\Domain\Number\NaturalNumber;
 use Appto\Common\Infrastructure\Symfony\Messenger\QueryBus;
 use Appto\User\Application\Definition\FilterDefinition;
 use Appto\User\Application\Definition\SearchCriteriaDefinition;
-use Appto\User\Application\FindAllUsersQuery;
-use Appto\User\Infrastructure\Api\Presenter\FindAllUserPresenter;
+use Appto\User\Application\FindUsersQuery;
+use Appto\User\Infrastructure\Api\Presenter\FindUsersPresenter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use OpenApi\Annotations as OA;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -21,7 +19,7 @@ use Symfony\Component\Routing\Annotation\Route;
  *     "/users", name="user_"
  * )
  */
-class FindAllUsersController extends AbstractController
+class FindUsersController extends AbstractController
 {
 
     /**
@@ -49,7 +47,7 @@ class FindAllUsersController extends AbstractController
     public function find(
         Request $request,
         QueryBus $queryBus,
-        FindAllUserPresenter $presenter
+        FindUsersPresenter $presenter
     ) {
         $filters = [];
         $filters[] = $request->query->get('activation_length')
@@ -62,7 +60,7 @@ class FindAllUsersController extends AbstractController
 
         $presenter->write(
             $queryBus->query(
-                new FindAllUsersQuery(
+                new FindUsersQuery(
                     new SearchCriteriaDefinition(array_filter($filters), $order)
                 )
             )
